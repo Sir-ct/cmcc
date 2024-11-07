@@ -26,7 +26,7 @@ function CoinListTable(){
                         <td></td>
                         <td>1</td>
                         <td style={{display: "flex", gap: '15px', alignItems: 'center'}}>
-                            <CoinImgComponent imagesrc={"https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"} />
+                            <CoinImgComponent coinId={1} />
                             <div>
                                 Bitcoin <span style={{color: '#616e85', marginLeft: '5px'}}>BTC</span>
                             </div>

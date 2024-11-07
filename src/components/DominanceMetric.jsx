@@ -11,13 +11,13 @@ function DominanceMetric(){
             </div>
             <div className="metrics-body">
                 <div className="dominance-item">
-                    <CoinImgComponent imagesrc={"https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"} />
+                    <CoinImgComponent coinId={1} />
                     <div className="dominance-price">
                         80.88%
                     </div>
                 </div>
                 <div className="dominance-item">
-                    <CoinImgComponent imagesrc={"https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png"} />
+                    <CoinImgComponent coinId={1027} />
                     <div className="dominance-price">
                         80.88%
                     </div>

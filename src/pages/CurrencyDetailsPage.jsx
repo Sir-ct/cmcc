@@ -353,14 +353,13 @@ function CurrencyDetailsPage(){
                             </div>
                         </div>
                         <div className="chart-wrap">
-                            <Sparklines data={chartArr} svgHeight={150}>
-                                <SparklinesLine />
-                                <SparklinesReferenceLine />
+                            <Sparklines data={chartArr}>
+                                <SparklinesLine color='#16C784' />
                             </Sparklines>
                         </div>
                     </div>
                 </div>
-                <div className="curreny-details-right">
+                <div className="currency-details-right">
                     <div className="cdr-header">
                         <div className="cdr-main">
                             <CoinImgComponent />
