@@ -21,10 +21,43 @@ function PairsHighlightComponet(){
                 </div>
             </div>
             <div className="coin-highlight-body">
-                <PairsTab />
-                <PairsTab />
-                <PairsTab />
-                <PairsTab />
+                <PairsTab 
+                    data={{
+                        main: 'UPONLY', 
+                        quote: "SOL", 
+                        price: 0.03339,
+                        trend: 9999
+                    }} 
+                    index={0}
+                />
+                <PairsTab 
+                    data={{
+                        main: 'ROSSPEPE', 
+                        quote: "SOL", 
+                        price: 0.001147,
+                        trend: 156
+                    }}
+                    index={1}
+                />
+                <PairsTab 
+                    data={{
+                        main: 'POPWIF', 
+                        quote: "SOL", 
+                        price: 0.0002331,
+                        trend: 75.32
+                    }}
+                    index={2}
+                />
+                <PairsTab 
+                    data={{
+                        main: 'MONKEY', 
+                        quote: "SOL", 
+                        price: 0.005893,
+                        trend: -24.26
+                    }}
+                    index={3}
+                />
+                
             </div>
         </div>
     )

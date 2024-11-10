@@ -1,5 +1,31 @@
 import CoinTab from "./CoinTab"
 function CoinHighlightComponent(){
+    const trendingArr = [
+        {
+            name: "BTC",
+            price: 76578.57,
+            logo: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png",
+            trend: 0.38
+        },
+        {
+            name: "APEDEV",
+            price: 0.0002884,
+            logo: "https://s2.coinmarketcap.com/static/img/coins/64x64/33837.png",
+            trend: -28.93
+        },
+        {
+            name: "PEPECOIN",
+            price: 4.91,
+            logo: "https://s2.coinmarketcap.com/static/img/coins/64x64/24835.png",
+            trend: 44.16
+        },
+        {
+            name: "SUNDOG",
+            price: 0.1337,
+            logo: "https://s2.coinmarketcap.com/static/img/coins/64x64/32717.png",
+            trend: -9.56
+        }
+    ]
     return(
         <div className="coin-highlight-wrap">
             <div className="coin-highlight-header">
@@ -20,10 +46,11 @@ function CoinHighlightComponent(){
                 </div>
             </div>
             <div className="coin-highlight-body">
-                <CoinTab index={0} />
-                <CoinTab index={1} />
-                <CoinTab index={2} />
-                <CoinTab index={3} />
+                {
+                    trendingArr.map((item, i)=>{
+                        return <CoinTab data={item} index={i} />
+                    })
+                }
             </div>
         </div>
     )

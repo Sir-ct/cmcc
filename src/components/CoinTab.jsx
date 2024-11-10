@@ -1,20 +1,22 @@
 import { Sparklines, SparklinesLine } from "react-sparklines"
 import UptrendComponent from "./UptrendComponent"
+import { formatTrendValue, getTrendText } from "../utilities/helperFunctions"
 
 function CoinTab({data, index}){
+    console.log("data", data)
     return(
         <div className="coin-tab">
                     <div className="coin-name-img-currency">
                         <div className="coin-name-img">
                             <span>{index + 1 || 1}</span>
                             <div className="coin-tab-img-cont">
-                                <img width={"100%"} src="https://s2.coinmarketcap.com/static/img/coins/64x64/32968.png" />
+                                <img width={"100%"} src={data.logo} />
                             </div>
-                            <p>AIC</p>
+                            <p>{data.name}</p>
                         </div>
                         
                         <p className="ct-currency">
-                            $0.1313
+                            ${data.price}
                         </p>
                     </div>
                     <div className="coin-chart">
@@ -23,7 +25,7 @@ function CoinTab({data, index}){
                                 <SparklinesLine color="green" style={{fill: "none", strokeWidth: "5px"}} />
                             </Sparklines>
                             <div>
-                                <UptrendComponent value={3.14} fontSize={"12px"} fontWeight={"600"} />
+                                <UptrendComponent trend={getTrendText(data.trend)} value={formatTrendValue(data.trend)} fontSize={"12px"} fontWeight={"600"} />
                             </div>
                         </div>
                     </div>

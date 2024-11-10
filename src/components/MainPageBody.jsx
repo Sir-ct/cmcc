@@ -10,7 +10,8 @@ import ShortTab from "./ShortTab"
 import CoinListTable from "./CoinListTable"
 import TableBottomBar from "./TableBottomBar"
 
-function MainPageBody(){
+function MainPageBody({coinList, currentPage, fearGreed}){
+    console.log("fear-greed", fearGreed)
     return(
         <div className="body-wrap">
             <div className="caption-section">
@@ -28,7 +29,7 @@ function MainPageBody(){
                         <VolumeMetric />
                     </div>
                     <div className="fgd-wrap">
-                        <FearGreedComponent />
+                        <FearGreedComponent value={fearGreed} />
                         <DominanceMetric />
                     </div>
                 </div>
@@ -39,7 +40,7 @@ function MainPageBody(){
                     <ShortTab />
                 </div>
                 <div className="list-table-wrap">
-                    <CoinListTable />
+                    <CoinListTable allCoins={coinList} />
                     <TableBottomBar />
                 </div>
             </div>

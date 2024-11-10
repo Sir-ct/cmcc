@@ -1,4 +1,5 @@
-function FearGreedComponent({value=0}){
+function FearGreedComponent({value}){
+    console.log("value in fear greed component", value)
     let normalizedAngle = normalizeAngle(value)
 
     function normalizeAngle(value){
@@ -9,7 +10,7 @@ function FearGreedComponent({value=0}){
     }
 
     function getFGText(val){
-        if(val > 50) return "Greed"
+        if(val > 59) return "Greed"
         if(val < 50) return "Fear"
         return "Neutral"
     }

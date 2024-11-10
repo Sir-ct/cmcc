@@ -1,8 +1,9 @@
+import { formatTrendValue, getTrendText } from "../utilities/helperFunctions"
 import CoinImgComponent from "./CoinImgComponent"
 import UptrendComponent from "./UptrendComponent"
 
-function CoinListTable(){
-
+function CoinListTable({allCoins}){
+    console.log(allCoins)
     return(
         <div style={{overflowX: "scroll", scrollbarWidth: 'thin'}}>
             <table>
@@ -22,39 +23,55 @@ function CoinListTable(){
                     </tr>
                 </thead>
                 <tbody>
-                    <tr style={{textAlign: 'right'}} onClick={()=>{window.location.assign(`/currencies/bitcoin`)}}>
-                        <td></td>
-                        <td>1</td>
-                        <td style={{display: "flex", gap: '15px', alignItems: 'center'}}>
-                            <CoinImgComponent coinId={1} />
-                            <div>
-                                Bitcoin <span style={{color: '#616e85', marginLeft: '5px'}}>BTC</span>
-                            </div>
-                        </td>
-                        <td>$69,343.47</td>
-                        <td className="hr">
-                            <UptrendComponent trend={"up"}  value={0.15} />
-                        </td>
-                        <td>
-                            <UptrendComponent trend={"down"} value={1.60} />
-                        </td>
-                        <td className="hr">
-                            <UptrendComponent trend={"up"} value={0.23} />
-                        </td>
-                        <td className="hr">
-                            $1,367,393,533,273
-                        </td>
-                        <td className="hr">
-                            $50,640,008,565
-                            <div style={{fontSize: '12px', color: '#58667e', marginTop: '5px'}}>729,780 BTC</div>
-                        </td>
-                        <td className="hr">
-                            19,776,412 BTC
-                        </td>
-                        <td className="hr">
-                            <img src="https://s3.coinmarketcap.com/generated/sparklines/web/7d/2781/1.svg" alt="bitcoin-7d-price-graph" class="sc-7b3ac367-0 jUcYyN" loading="lazy" />
-                        </td>
-                    </tr>
+                    {
+                        allCoins.length > 0 ? allCoins.map((coin, i)=>{
+                            let trend1h = getTrendText(coin?.quote?.USD?.percent_change_1h)
+                            let value1h = formatTrendValue(coin?.quote?.USD?.percent_change_1h)
+
+                            let trend24h = getTrendText(coin?.quote?.USD?.percent_change_24h)
+                            let value24h = formatTrendValue(coin?.quote?.USD?.percent_change_24h)
+
+                            let trend7d = getTrendText(coin?.quote?.USD?.percent_change_7d)
+                            let value7d = formatTrendValue(coin?.quote?.USD?.percent_change_7d)
+                            return(
+                                <tr style={{textAlign: 'right'}} onClick={()=>{window.location.assign(`/currencies/${coin.slug}`)}}>
+                                    <td></td>
+                                    <td>{i+1}</td>
+                                    <td style={{display: "flex", gap: '15px', alignItems: 'center'}}>
+                                        <CoinImgComponent coinId={coin.id} />
+                                        <div>
+                                            {coin.name} <span style={{color: '#616e85', marginLeft: '5px'}}>{coin.symbol}</span>
+                                        </div>
+                                    </td>
+                                    <td>${parseFloat(coin.quote.USD.price.toFixed(2)).toLocaleString()}</td>
+                                    <td className="hr">
+                                        <UptrendComponent trend={trend1h}  value={value1h} />
+                                    </td>
+                                    <td>
+                                        <UptrendComponent trend={trend24h} value={value24h} />
+                                    </td>
+                                    <td className="hr">
+                                        <UptrendComponent trend={trend7d} value={value7d} />
+                                    </td>
+                                    <td className="hr">
+                                        ${parseFloat(coin.quote.USD.market_cap.toFixed()).toLocaleString()}
+                                    </td>
+                                    <td className="hr">
+                                        ${parseFloat(coin.quote.USD.volume_24h.toFixed()).toLocaleString()}
+                                        <div style={{fontSize: '12px', color: '#58667e', marginTop: '5px'}}>{parseFloat((coin.quote.USD.volume_24h / coin.quote.USD.price).toFixed()).toLocaleString()} {coin.symbol}</div>
+                                    </td>
+                                    <td className="hr">
+                                        {parseFloat(coin.circulating_supply.toFixed()).toLocaleString()} {coin.symbol}
+                                    </td>
+                                    <td className="hr">
+                                        <img src={`https://s3.coinmarketcap.com/generated/sparklines/web/7d/2781/${coin.id}.svg`} alt="bitcoin-7d-price-graph" class={`sc-7b3ac367-0 jUcYyN ${getTrendText(coin.quote.USD.percent_change_7d) === "up" && "isUp"}`} loading="lazy" />
+                                    </td>
+                                </tr>
+                            )
+                        })
+                        :
+                        <></>
+                    }
                 </tbody>
                 
             </table>

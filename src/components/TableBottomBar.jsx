@@ -17,8 +17,8 @@ function TableBottomBar({currentPage=1}){
                 Showing 501 - 601 out of 9896
             </div>
             <div style={{display: "flex", gap: '10px'}}>
-                {pageArr.map((page)=>(
-                    <PaginationBtn currentPage={currentPage} number={page}  />
+                {pageArr.map((page,i)=>(
+                    <PaginationBtn key={i} currentPage={currentPage} number={page}  />
                 ))}
                 <div>...</div>
                 <PaginationBtn currentPage={currentPage} number={998} />
