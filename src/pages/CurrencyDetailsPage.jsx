@@ -15,15 +15,35 @@ function CurrencyDetailsPage(){
    const {currency} = useParams()
    const [coinDets, setCoinDets] = useState("")
 
-   async function getCoinDets(){
-    try{
-        let details = await axios.get(`${baseUrl}/coins/${currency}`)
-        console.log(details)
-        setCoinDets(details.data.data[0])
-    }catch(err){
-        console.log(err)
+   const differenceArr = [
+    {
+        cmc: 'binance',
+        gecko: 'binanceCoin'
+    },
+    {
+        cmc: 'toncoin',
+        gecko: 'the-open-network'
+    },
+    {
+        cmc: 'quant',
+        gecko: 'quant-network'
     }
-}
+   ]
+
+   async function getCoinDets(){
+        try{
+            let details = await axios.get(`${baseUrl}/coins/${currency}`)
+            console.log(details)
+            setCoinDets(details.data.data)
+        }catch(err){
+            console.log(err)
+        }
+    }
+
+    async function copyText(text){
+        await window.navigator.clipboard.writeText(text)
+        console.log('text copied', text)
+    }
 
 console.log("coin details", coinDets)
    useEffect(()=>{
@@ -37,7 +57,7 @@ console.log("coin details", coinDets)
                 <div className="currency-details-left">
                     <div className="cdl-head">
                         <div className="cdl-title">
-                            <CoinImgComponent url={coinDets?.image} />
+                            <CoinImgComponent url={coinDets?.image?.small} />
                             {coinDets?.name}
                             <span>{coinDets?.symbol}</span>
                             <div className="cdl-rank">#{coinDets?.market_cap_rank}</div>
@@ -45,7 +65,7 @@ console.log("coin details", coinDets)
                         <div className="cdl-head-btns">
                             <div>
                                 <svg width={'1em'} height={'1em'} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M11.2691 4.41115C11.5006 3.89177 11.6164 3.63208 11.7776 3.55211C11.9176 3.48263 12.082 3.48263 12.222 3.55211C12.3832 3.63208 12.499 3.89177 12.7305 4.41115L14.5745 8.54808C14.643 8.70162 14.6772 8.77839 14.7302 8.83718C14.777 8.8892 14.8343 8.93081 14.8982 8.95929C14.9705 8.99149 15.0541 9.00031 15.2213 9.01795L19.7256 9.49336C20.2911 9.55304 20.5738 9.58288 20.6997 9.71147C20.809 9.82316 20.8598 9.97956 20.837 10.1342C20.8108 10.3122 20.5996 10.5025 20.1772 10.8832L16.8125 13.9154C16.6877 14.0279 16.6252 14.0842 16.5857 14.1527C16.5507 14.2134 16.5288 14.2807 16.5215 14.3503C16.5132 14.429 16.5306 14.5112 16.5655 14.6757L17.5053 19.1064C17.6233 19.6627 17.6823 19.9408 17.5989 20.1002C17.5264 20.2388 17.3934 20.3354 17.2393 20.3615C17.0619 20.3915 16.8156 20.2495 16.323 19.9654L12.3995 17.7024C12.2539 17.6184 12.1811 17.5765 12.1037 17.56C12.0352 17.5455 11.9644 17.5455 11.8959 17.56C11.8185 17.5765 11.7457 17.6184 11.6001 17.7024L7.67662 19.9654C7.18404 20.2495 6.93775 20.3915 6.76034 20.3615C6.60623 20.3354 6.47319 20.2388 6.40075 20.1002C6.31736 19.9408 6.37635 19.6627 6.49434 19.1064L7.4341 14.6757C7.46898 14.5112 7.48642 14.429 7.47814 14.3503C7.47081 14.2807 7.44894 14.2134 7.41394 14.1527C7.37439 14.0842 7.31195 14.0279 7.18708 13.9154L3.82246 10.8832C3.40005 10.5025 3.18884 10.3122 3.16258 10.1342C3.13978 9.97956 3.19059 9.82316 3.29993 9.71147C3.42581 9.58288 3.70856 9.55304 4.27406 9.49336L8.77835 9.01795C8.94553 9.00031 9.02911 8.99149 9.10139 8.95929C9.16534 8.93081 9.2226 8.8892 9.26946 8.83718C9.32241 8.77839 9.35663 8.70162 9.42508 8.54808L11.2691 4.41115Z" stroke="#808A9D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                                0
+                                {coinDets && coinDets?.developer_data.stars}
                             </div>
                             <div>
                                 <svg width={'1em'} height={'1em'} fill="#808A9D" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" stroke="#808A9D"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M27 22c-1.646 0-3.103 0.8-4.013 2.028l-13.168-6.71c0.114-0.421 0.181-0.86 0.181-1.317 0-0.572-0.101-1.119-0.277-1.63l13.242-6.426c0.909 1.244 2.375 2.056 4.035 2.056 2.762 0 5-2.239 5-5s-2.238-5-5-5-5 2.239-5 5c0 0.388 0.049 0.764 0.133 1.127l-13.432 6.518c-0.915-1.009-2.231-1.646-3.7-1.646-2.761 0-5 2.239-5 5s2.239 5 5 5c1.59 0 3.004-0.744 3.92-1.902l13.222 6.739c-0.090 0.374-0.142 0.762-0.142 1.163 0 2.761 2.238 5 5 5s5-2.239 5-5-2.238-5-5-5zM27 2c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3zM5 19c-1.657 0-3-1.343-3-3s1.343-3 3-3c1.657 0 3 1.344 3 3s-1.343 3-3 3zM27 30c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z"></path> </g></svg>
@@ -53,14 +73,14 @@ console.log("coin details", coinDets)
                         </div>
                     </div>
                     <div className="cdl-price">
-                        <div>${coinDets && coinDets?.current_price.toLocaleString()}</div> 
-                        <UptrendComponent trend={coinDets && getTrendText(coinDets?.price_change_percentage_24h)} value={coinDets && formatTrendValue(coinDets?.price_change_percentage_24h)} />
+                        <div>${coinDets && coinDets?.market_data?.current_price?.usd.toLocaleString()}</div> 
+                        <UptrendComponent trend={coinDets && getTrendText(coinDets?.market_data?.price_change_percentage_24h)} value={coinDets && formatTrendValue(coinDets?.market_data?.price_change_percentage_24h)} />
                     </div>
                     <div className="cdl-stats">
                         <div className="cdl-stat-card">
                             <div className="csc-head">Market cap</div>
                             <div className="csc-dets">
-                                ${formatLargeNumber(coinDets?.market_cap)} <UptrendComponent trend={coinDets && getTrendText(coinDets?.market_cap_change_percentage_24h)} value={coinDets && formatTrendValue(coinDets?.market_cap_change_percentage_24h)} />
+                                ${coinDets && coinDets?.market_data?.market_cap.usd === 0 ? formatLargeNumber(90702675) : formatLargeNumber(coinDets?.market_data?.market_cap?.usd)} <UptrendComponent trend={coinDets && getTrendText(coinDets?.market_data.market_cap_change_percentage_24h)} value={coinDets && formatTrendValue(coinDets?.market_data?.market_cap_change_percentage_24h)} />
                             </div>
                         </div>
                         <div className="cdl-stat-card">
@@ -90,7 +110,7 @@ console.log("coin details", coinDets)
                         <div className="cdl-stat-card">
                             <div className="csc-head">Max. supply</div>
                             <div className="csc-dets">
-                                &infinity;
+                                &infin;
                             </div>
                         </div>
                         <div className="cdl-stat-card">
@@ -105,12 +125,21 @@ console.log("coin details", coinDets)
                         <div className="cdl-metadata-tab">
                             <div className="cdlm-key">Website</div>
                             <div className="cdlm-body">
-                                <div className="cdlm-body-item btn-bg">
-                                    <svg width={"1em"} height={'1em'} viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#808A9D"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><circle cx="96" cy="96" r="74" stroke="#808A9D" stroke-width="12"></circle><ellipse cx="96" cy="96" stroke="#808A9D" stroke-width="12" rx="30" ry="74"></ellipse><path stroke="#808A9D" stroke-linecap="round" stroke-linejoin="round" stroke-width="12" d="M28 72h136M28 120h136"></path></g></svg>
-                                    Website
+                                {coinDets && coinDets?.links?.homepage &&
+                                    <a href={coinDets?.links?.homepage[0]} className="cdlm-body-item btn-bg">
+                                        <svg width={"1em"} height={'1em'} viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#808A9D"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><circle cx="96" cy="96" r="74" stroke="#808A9D" stroke-width="12"></circle><ellipse cx="96" cy="96" stroke="#808A9D" stroke-width="12" rx="30" ry="74"></ellipse><path stroke="#808A9D" stroke-linecap="round" stroke-linejoin="round" stroke-width="12" d="M28 72h136M28 120h136"></path></g></svg>
+                                        Website
+                                    </a>
+                                }
+                                {
+                                    coinDets && coinDets?.links?.whitepaper &&
+                                    <a href={coinDets?.links?.whitepaper} className="cdlm-body-item btn-bg">
+                                        <svg width={'1em'} height={'1em'} viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#808A9D" stroke="#808A9D"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M719.8 651.8m-10 0a10 10 0 1 0 20 0 10 10 0 1 0-20 0Z" fill="#808A9D808A9DE73B37"></path><path d="M512.1 64H172v896h680V385.6L512.1 64z m278.8 324.3h-280v-265l280 265zM808 916H216V108h278.6l0.2 0.2v296.2h312.9l0.2 0.2V916z" fill="#808A9D808A9D"></path><path d="M280.5 530h325.9v16H280.5z" fill="#808A9D808A9D"></path><path d="M639.5 530h90.2v16h-90.2z" fill="#808A9D808A9DE73B37"></path><path d="M403.5 641.8h277v16h-277z" fill="#808A9D808A9D"></path><path d="M280.6 641.8h91.2v16h-91.2z" fill="#808A9D808A9DE73B37"></path><path d="M279.9 753.7h326.5v16H279.9z" fill="#808A9D808A9D"></path><path d="M655.8 753.7h73.9v16h-73.9z" fill="#808A9D808A9DE73B37"></path></g></svg>
+                                        WhitePaper
+                                    </a>
+                                }
                                 </div>
                             </div>
-                        </div>
                         <div className="cdl-metadata-tab">
                             <div className="cdlm-key">Socials</div>
                             <div className="cdlm-body">
@@ -119,15 +148,21 @@ console.log("coin details", coinDets)
                                 </div>
                             </div>
                         </div>
-                        <div className="cdl-metadata-tab">
-                            <div className="cdlm-key">Contracts</div>
-                            <div className="cdlm-body">
-                                <div className="cdlm-body-item btn-bg">
-                                    <svg width={"1em"} height={'1em'} viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#808A9D"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><circle cx="96" cy="96" r="74" stroke="#808A9D" stroke-width="12"></circle><ellipse cx="96" cy="96" stroke="#808A9D" stroke-width="12" rx="30" ry="74"></ellipse><path stroke="#808A9D" stroke-linecap="round" stroke-linejoin="round" stroke-width="12" d="M28 72h136M28 120h136"></path></g></svg>
-                                    0xdac1...831ec7
+                        {
+                            coinDets && coinDets?.contract_address &&
+                            <div className="cdl-metadata-tab">
+                                <div className="cdlm-key">Contracts</div>
+                                <div className="cdlm-body">
+                                    <div className="cdlm-body-item btn-bg">
+                                        <svg width={"1em"} height={'1em'} viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#808A9D"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><circle cx="96" cy="96" r="74" stroke="#808A9D" stroke-width="12"></circle><ellipse cx="96" cy="96" stroke="#808A9D" stroke-width="12" rx="30" ry="74"></ellipse><path stroke="#808A9D" stroke-linecap="round" stroke-linejoin="round" stroke-width="12" d="M28 72h136M28 120h136"></path></g></svg>
+                                        {coinDets && coinDets?.contract_address?.substring(0, 6)} ... {coinDets && coinDets?.contract_address?.substring(coinDets?.contract_address.length - 6)}
+                                        <div onClick={()=>{copyText(coinDets?.contract_address)}}>
+                                            <svg width={'1em'} height={'1em'} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#808A9D"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M6 11C6 8.17157 6 6.75736 6.87868 5.87868C7.75736 5 9.17157 5 12 5H15C17.8284 5 19.2426 5 20.1213 5.87868C21 6.75736 21 8.17157 21 11V16C21 18.8284 21 20.2426 20.1213 21.1213C19.2426 22 17.8284 22 15 22H12C9.17157 22 7.75736 22 6.87868 21.1213C6 20.2426 6 18.8284 6 16V11Z" stroke="#808A9D" stroke-width="1.5"></path> <path d="M6 19C4.34315 19 3 17.6569 3 16V10C3 6.22876 3 4.34315 4.17157 3.17157C5.34315 2 7.22876 2 11 2H15C16.6569 2 18 3.34315 18 5" stroke="#808A9D" stroke-width="1.5"></path> </g></svg>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        }
                     </div>
                     <div className="usd-converter-wrap btn-bg">
                         <div>
@@ -207,7 +242,7 @@ console.log("coin details", coinDets)
                             </div>
                         </div>
                         <div className="chart-wrap">
-                            <Sparklines data={[]}>
+                            <Sparklines data={coinDets && coinDets?.market_data?.sparkline_7d.price}>
                                 <SparklinesLine color='#16C784' />
                             </Sparklines>
                         </div>

@@ -1,6 +1,6 @@
 import CoinImgComponent from "./CoinImgComponent"
 
-function DominanceMetric(){
+function DominanceMetric({btcDominance, ethDominance}){
     return(
         <div className="metrics">
             <div className="metrics-header">
@@ -13,13 +13,13 @@ function DominanceMetric(){
                 <div className="dominance-item">
                     <CoinImgComponent coinId={1} />
                     <div className="dominance-price">
-                        80.88%
+                        {btcDominance && btcDominance.toFixed(2)}%
                     </div>
                 </div>
                 <div className="dominance-item">
                     <CoinImgComponent coinId={1027} />
                     <div className="dominance-price">
-                        80.88%
+                        {ethDominance && ethDominance.toFixed(2)}%
                     </div>
                 </div>
             </div>

@@ -1,8 +1,9 @@
 import { formatTrendValue, getTrendText } from "../utilities/helperFunctions"
 import CoinImgComponent from "./CoinImgComponent"
+import TableSkeleton from "./Skeletons/TableSkeleton"
 import UptrendComponent from "./UptrendComponent"
 
-function CoinListTable({allCoins}){
+function CoinListTable({allCoins, listLoading}){
     console.log(allCoins)
     return(
         <div style={{overflowX: "scroll", scrollbarWidth: 'thin'}}>
@@ -24,6 +25,9 @@ function CoinListTable({allCoins}){
                 </thead>
                 <tbody>
                     {
+                        listLoading ?
+                        <TableSkeleton />
+                        :
                         allCoins.length > 0 ? allCoins.map((coin, i)=>{
                             let trend1h = getTrendText(coin?.quote?.USD?.percent_change_1h)
                             let value1h = formatTrendValue(coin?.quote?.USD?.percent_change_1h)
@@ -43,7 +47,14 @@ function CoinListTable({allCoins}){
                                             {coin.name} <span style={{color: '#616e85', marginLeft: '5px'}}>{coin.symbol}</span>
                                         </div>
                                     </td>
-                                    <td>${parseFloat(coin.quote.USD.price.toFixed(2)).toLocaleString()}</td>
+                                    <td>${
+                                            coin.quote.USD.price >= 1
+                                            ?
+                                            parseFloat(coin.quote.USD.price.toFixed(2)).toLocaleString()
+                                            :
+                                            parseFloat(coin.quote.USD.price)
+                                        }
+                                    </td>
                                     <td className="hr">
                                         <UptrendComponent trend={trend1h}  value={value1h} />
                                     </td>

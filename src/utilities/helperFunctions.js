@@ -7,7 +7,6 @@ function getTrendText(number){
 }
 
 function formatTrendValue(number){
-    console.log("number to format", number)
     let numberToString = number?.toString()
     if(numberToString[0] === "-"){
        return parseFloat(numberToString.slice(1)).toFixed(2)

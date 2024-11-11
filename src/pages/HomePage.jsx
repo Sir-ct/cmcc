@@ -9,16 +9,22 @@ const baseUrl = "https://cmcc-proxy.onrender.com"
 
 function HomePage(){
     const [allListings, setAllListings] = useState([])
+    const [metrics, setMetrics] = useState(null)
     const [fearGreed, setFearGreed] = useState(0)
+
+    const [listingsLoading, setListingsLoading] = useState(false)
 
 
     async function getAllListings(){
+        setListingsLoading(true)
         try{
             let listings = await axios.get(baseUrl+"/all-listings")
             console.log(listings.data.data.data)
             setAllListings(listings.data.data.data)
+            setListingsLoading(false)
         }catch(err){
             console.log(err)
+            setListingsLoading(false)
         }
     }
 
@@ -32,14 +38,25 @@ function HomePage(){
         }
     }
 
+    async function getMetrics(){
+        try{
+            let metrics = await axios.get(baseUrl+"/metrics")
+            console.log("metrics", metrics)
+            setMetrics(metrics.data.data.data)
+        }catch(err){
+            console.log(err)
+        }
+    }
+
     useEffect(()=>{
         getAllListings()
         getFearAndGreed()
+        getMetrics()
     }, [])
     return(
         <>
             <Header />
-            <MainPageBody coinList={allListings} fearGreed={fearGreed} />
+            <MainPageBody listLoading={listingsLoading} metrics={metrics} coinList={allListings} fearGreed={fearGreed} />
             <PreFooter />
             <Footer />
         </>

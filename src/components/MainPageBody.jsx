@@ -10,7 +10,7 @@ import ShortTab from "./ShortTab"
 import CoinListTable from "./CoinListTable"
 import TableBottomBar from "./TableBottomBar"
 
-function MainPageBody({coinList, currentPage, fearGreed}){
+function MainPageBody({coinList, currentPage, listLoading, metrics, fearGreed}){
     console.log("fear-greed", fearGreed)
     return(
         <div className="body-wrap">
@@ -25,12 +25,12 @@ function MainPageBody({coinList, currentPage, fearGreed}){
                 </div>
                 <div className="metrics-wrap">
                     <div className="mcap-vmet">
-                        <MarketCapMetric />
-                        <VolumeMetric />
+                        <MarketCapMetric marketCap={metrics && metrics.quote.USD.total_market_cap} percentChange={metrics && metrics.quote.USD.total_market_cap_yesterday_percentage_change} />
+                        <VolumeMetric volume={metrics && metrics.quote.USD.total_volume_24h} percentChange={metrics && metrics.quote.USD.total_volume_24h_yesterday_percentage_change}  />
                     </div>
                     <div className="fgd-wrap">
                         <FearGreedComponent value={fearGreed} />
-                        <DominanceMetric />
+                        <DominanceMetric btcDominance={metrics && metrics.btc_dominance} ethDominance={metrics && metrics.eth_dominance} />
                     </div>
                 </div>
             </div>
@@ -40,7 +40,7 @@ function MainPageBody({coinList, currentPage, fearGreed}){
                     <ShortTab />
                 </div>
                 <div className="list-table-wrap">
-                    <CoinListTable allCoins={coinList} />
+                    <CoinListTable listLoading={listLoading} allCoins={coinList} />
                     <TableBottomBar />
                 </div>
             </div>

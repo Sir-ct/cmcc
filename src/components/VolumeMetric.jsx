@@ -1,7 +1,26 @@
 import { Sparklines, SparklinesLine } from "react-sparklines"
 import UptrendComponent from "./UptrendComponent"
+import { formatLargeNumber, formatTrendValue, getTrendText } from "../utilities/helperFunctions"
+import { useEffect, useState } from "react";
 
-function VolumeMetric(){
+function VolumeMetric({volume, percentChange}){
+    const greenColor = '#16C784'
+    const redColor = "#EA3943"
+    const [sparklineData, setSparklineData] = useState([])
+
+    function getRandomInt(max) {
+        return Math.floor(Math.random() * max);
+    }
+
+    useEffect(()=>{
+        let arr = []
+        for(let i = 0; i < 50; i++){
+            arr.push(getRandomInt(100))
+        }
+        setSparklineData(arr)
+    }, [])
+
+    console.log('generated sparkline', sparklineData)
     return(
         <div className="metrics">
             <div className="metrics-header">
@@ -11,12 +30,12 @@ function VolumeMetric(){
                 </div>
             </div>
             <div className="metrics-body">
-                <div className="metrics-money">$2.43T</div>
+                <div className="metrics-money">${formatLargeNumber(volume)}</div>
                 <div className="metrics-trend">
-                    <UptrendComponent value={0.19} fontSize="12px" />
+                    <UptrendComponent trend={percentChange && getTrendText(percentChange)} value={percentChange && formatTrendValue(percentChange)} fontSize="12px" />
                 </div>
-                <Sparklines data={[10,5,6,19,10,12,13,10]} svgWidth={120} svgHeight={39}>
-                    <SparklinesLine color="red" style={{fill: "none", strokeWidth: "4px"}} />
+                <Sparklines data={sparklineData} svgWidth={120} svgHeight={39}>
+                    <SparklinesLine color={percentChange && getTrendText(percentChange) === "up" ? greenColor : redColor} style={{fill: "none", strokeWidth: "4px"}} />
                 </Sparklines>
             </div>
         </div>
