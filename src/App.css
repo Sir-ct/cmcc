@@ -37,6 +37,9 @@ body{
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+.mobile-close-top{
+  display: none;
+}
 .search-modal-wrap{
   position: fixed;
   top: 0;
@@ -46,7 +49,7 @@ body{
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 900;
 }
-.search-modal-body{
+.search-modal-body, .warn-modal-body{
   width: 60%;
   height: 80vh;
   margin: 3em auto;
@@ -166,6 +169,45 @@ body{
     color: #0D1421;
     font-size: 12px;
     font-weight: 600;
+  }
+  .sub-nav-wrap{
+    background-color: white;
+    position: absolute;
+    margin-top: 2em;
+    padding: 2em;
+    display: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 24px 0 rgba(88,102,126,.08),0 1px 2px 0 rgba(88,102,126,.12);
+    z-index: 999;
+  }
+  .sub-nav-title{
+    color: #808A9D;
+    font-weight: 600;
+    font-size: inherit;
+    padding: 0 0 1em 0;
+  }
+  .sub-nav ul{
+    margin: 0;
+    padding: 0;
+  }
+  .sub-nav li{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: .5em;
+    margin: 1em 0 0 0;
+  }
+  .sub-nav li img{
+    width: 35px;
+    height: 35px;
+  }
+  .sub-nav-divider{
+    width: 1px;
+    background-color: #CFD6E4;
+    margin: 0 1em;
+  }
+  .left-nav-item:hover .sub-nav-wrap{
+    display: flex;
   }
   .search-bar{
     display: flex;
@@ -336,7 +378,7 @@ body{
     width: 8vw;
     border-radius: 10px;
     padding: 12px 16px;
-        box-shadow: 0 4px 24px 0 rgba(88,102,126,.08),0 1px 2px 0 rgba(88,102,126,.12);
+    box-shadow: 0 4px 24px 0 rgba(88,102,126,.08),0 1px 2px 0 rgba(88,102,126,.12);
   }
   .metrics-header{
     font-size: 1rem;
@@ -853,11 +895,43 @@ body{
   }
 
   @media(max-width: 1200px){
+    .search-modal-body{
+      width: 100%;
+      height: 100vh;
+    }
+    .warn-modal-body{
+      width: 80%;
+      height: 50vh;
+      margin-top: 50%;
+    }
+    .sub-nav-divider{
+      display: none;
+    }
+    .left-nav-item:hover .sub-nav-wrap{
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: scroll;
+      z-index: 1000;
+    }
+    .mobile-close-top{
+      display: flex;
+      justify-content: space-between;
+    }
      .secondary-nav{
       display: none;
     }
     .left-nav-items-wrap {
       display: none;
+      position: fixed;
+      width: 98%;
+      height: 100vh;
+      top: 0;
+      left: 0%;
+      background-color: white;
+      padding: .5em 1em;
+      flex-direction: column;
+      z-index: 1000;
     }
     .main-nav-right{
       display: none;

@@ -1,7 +1,7 @@
 function ListWarningModal({showModal, closeModal}){
     return(
         <div onClick={()=>{closeModal()}} className="search-modal-wrap" style={{display: showModal===false && "none"}}>
-            <div onClick={(e)=>{e.stopPropagation()}} className="search-modal-body">
+            <div onClick={(e)=>{e.stopPropagation()}} className="warn-modal-body">
                 <div className="search-head">
                     <div className="sm-li">
                     </div>
