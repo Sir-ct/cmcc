@@ -16,6 +16,14 @@
     border-radius: 50%;
 }
 
+.skeleton.width-100{
+    width: 100px;
+}
+
+.skeleton.width-50{
+    width: 50px;
+}
+
 @keyframes pulse {
     50%{
         opacity: .5s;

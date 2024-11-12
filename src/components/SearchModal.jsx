@@ -1,7 +1,7 @@
 import CoinImgComponent from "./CoinImgComponent"
 import UptrendComponent from "./UptrendComponent"
 
-function SearchModal({showModal=true, closeSearchModal}){
+function SearchModal({showModal, closeSearchModal}){
     return(
         <div onClick={()=>{closeSearchModal()}} className="search-modal-wrap" style={{display: showModal===false && "none"}}>
             <div onClick={(e)=>{e.stopPropagation()}} className="search-modal-body">

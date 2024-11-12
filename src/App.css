@@ -695,6 +695,10 @@ body{
   }
   .usd-converter-wrap input{
     border: none;
+    text-align: right;
+    font-weight: 600;
+    border: none;
+    outline: none;
   }
   .usd-converter-wrap span{
     font-size: 12px;
@@ -806,9 +810,6 @@ body{
     font-weight: 600;
     color: #616E85;
   }
-  .ctt-left span:first-child, .ctt-right span:first-child{
-    background-color: white;
-  }
   .currency-details-right{
     width: 21%;
     padding: 1em;
@@ -829,6 +830,7 @@ body{
     align-items: center;
     font-size: 14px;
     font-weight: 600;
+    text-transform: capitalize;
   }
   .cdr-main-followers{
     font-size: 12px;
